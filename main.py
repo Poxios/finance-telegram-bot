@@ -1,3 +1,5 @@
+# TODO: Read Sticky note first
+
 import requests
 from dateutil import parser
 import telegram
@@ -78,6 +80,8 @@ def get_fear_and_greed_value() -> str:
         return f'FearAndGreed value failed to fetch. Status Code: {response.status_code}\n'
 
 def main():    
+    print(f'----- START RUNNING SEND STOCK INFO {datetime.now()} -----')
+    
     response_str = ''
 
     response_str += '---Stock Info---\n'
@@ -94,5 +98,7 @@ def main():
     response_str += 'TODO\n'
 
     send_messages_to_registered_users(response_str)
+
+    print(f'----- END RUNNING SEND STOCK INFO {datetime.now()} -----')
 
 main()
