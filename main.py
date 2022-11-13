@@ -1,4 +1,5 @@
 # TODO: Read Sticky note first
+# Use venv
 
 import requests
 from dateutil import parser
