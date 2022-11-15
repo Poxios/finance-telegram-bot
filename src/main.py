@@ -13,7 +13,7 @@ import talib
 import yfinance as yf
 
 # Import from local
-import telegram_controller
+import controller_telegram
 
 # Initializing Telegram bot
 token = os.environ.get('TELEBOT_TOKEN')
@@ -109,8 +109,6 @@ def main():
 
 
 # ! Scheduler
-
-
 def schedule_checker():
     while True:
         schedule.run_pending()
