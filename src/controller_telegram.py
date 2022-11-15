@@ -9,7 +9,7 @@ import controller_sqlite
 
 
 def get_telegram_bot_token_from_secret():
-    with open('./secrets.json', 'r') as file:
+    with open('secrets.json', 'r') as file:
         data = json.load(file)
         return (data['TELEGRAM_BOT_TOKEN'], data['TELEGRAM_BOT_ADMIN_USER_ID'])
 

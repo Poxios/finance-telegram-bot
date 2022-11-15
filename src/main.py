@@ -123,4 +123,4 @@ if __name__ == "__main__":
     Thread(target=schedule_checker).start()
 
     # Start polling messages from telegram
-    telegram_controller.start_polling()
+    controller_telegram.start_polling()
