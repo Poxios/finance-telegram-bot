@@ -1,6 +1,6 @@
 # TODO: Read Sticky note first
-# Use venv
-
+import schedule
+import time
 import requests
 from dateutil import parser
 import telegram
@@ -80,9 +80,10 @@ def get_fear_and_greed_value() -> str:
     else:
         return f'FearAndGreed value failed to fetch. Status Code: {response.status_code}\n'
 
-def main():    
+
+def main():
     print(f'----- START RUNNING SEND STOCK INFO {datetime.now()} -----')
-    
+
     response_str = ''
 
     response_str += '---Stock Info---\n'
@@ -102,4 +103,11 @@ def main():
 
     print(f'----- END RUNNING SEND STOCK INFO {datetime.now()} -----')
 
-main()
+
+# ! Scheduler
+tz_seoul = datetime.timezone(datetime.timedelta(hours=9))
+schedule.every().day.at(datetime.time(hour=6, tzinfo=tz_seoul)).do(main)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
