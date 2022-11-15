@@ -1,4 +1,5 @@
 # TODO: Read Sticky note first
+from threading import Thread
 import schedule
 import time
 import requests
@@ -10,6 +11,9 @@ from datetime import datetime, timedelta
 import pandas_datareader as pdr
 import talib
 import yfinance as yf
+
+# Import from local
+import telegram_controller
 
 # Initializing Telegram bot
 token = os.environ.get('TELEBOT_TOKEN')
@@ -105,9 +109,20 @@ def main():
 
 
 # ! Scheduler
-tz_seoul = datetime.timezone(datetime.timedelta(hours=9))
-schedule.every().day.at(datetime.time(hour=6, tzinfo=tz_seoul)).do(main)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+
+def schedule_checker():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+if __name__ == "__main__":
+    tz_seoul = datetime.timezone(datetime.timedelta(hours=9))
+    schedule.every().day.at(datetime.time(hour=6, tzinfo=tz_seoul)).do(main)
+
+    # Start Scheduler
+    Thread(target=schedule_checker).start()
+
+    # Start polling messages from telegram
+    telegram_controller.start_polling()
