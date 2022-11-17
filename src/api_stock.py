@@ -62,7 +62,7 @@ def __get_fear_and_greed_value() -> str:
 
 def get_full_finance_info_message():
     print('[MESSAGE] Fetching finance info..')
-    response_str = dt.date()
+    response_str = f'{dt.now()}\n\n'
 
     response_str += '---Stock Info---\n'
     for ticker in ['QQQ', 'IVV']:

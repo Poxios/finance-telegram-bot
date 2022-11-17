@@ -22,7 +22,7 @@ def main():
     finance_message = get_full_finance_info_message()
     user_list_to_send = user_get_list()
     for user_id, user_name in user_list_to_send:
-        msg_to_send = f'<{dt.now()}>\n\n{finance_message}'
+        msg_to_send = finance_message
         send_telegram_message(user_id, msg_to_send)
 
     print(f'[SCHEDULE] Success Running {dt.now()}')
