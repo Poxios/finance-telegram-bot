@@ -22,7 +22,7 @@ init_required = False
 if not os.path.isfile('sqlite.db'):
     init_required = True
 
-con = sqlite3.connect('./sqlite.db')
+con = sqlite3.connect('./sqlite.db', check_same_thread=False)
 cur = con.cursor()
 
 if init_required:
@@ -43,7 +43,7 @@ def user_add_new_user(user_id: int, name: str):
 
 def user_get_list():
     cur.execute('SELECT * FROM User')
-    user_list = cur.fetchall
+    user_list = cur.fetchall()
     return user_list
 
 
@@ -64,11 +64,14 @@ def favorite_stock_get_list(user_id: int):
 def favorite_stock_add_to_user(user_id: int, stock_ticker: str):
     try:
         print('Adding favorite stock...')
+        print(f'Ticker: {stock_ticker}')
+        print(f'User: {user_id}')
         cur.execute(
-            f'INSERT INTO Favorite_Stock VALUES({stock_ticker, user_id})')
-        print('Adding favorite stock complete')
-    except:
-        print('Adding favorite stock FAILED')
+            f'INSERT INTO Favorite_Stock VALUES ("{stock_ticker}", {user_id})')
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 
 def favorite_stock_remove_from_user(user_id: int, stock_ticker: str):
