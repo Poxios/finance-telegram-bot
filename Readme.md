@@ -1,7 +1,8 @@
-# Finance Telegram Bot
 <p align="center">
   <img src="./res/logo.png" width=100/>
 </p>
+
+# Finance Telegram Bot
 <p align="center">
   <img src="./res/screenshot.jpg" width=250/>
 </p>
