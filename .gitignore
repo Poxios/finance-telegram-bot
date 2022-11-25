@@ -5,3 +5,4 @@ src/test.db-journal
 src/secrets.json
 sqlite.db-journal
 sqlite.db
+test/chromedriver.exe

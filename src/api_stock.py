@@ -4,6 +4,9 @@ import json
 from datetime import datetime as dt, timedelta
 import talib
 import yfinance as yf
+# Import from local
+import api_exchange_rate
+import api_deposit_rate
 
 
 def __get_stock_price_and_rsi(stock_name: str) -> str:
@@ -14,6 +17,9 @@ def __get_stock_price_and_rsi(stock_name: str) -> str:
     rsi = talib.RSI(stock_close_data)
 
     last_date = stock_close_data.index[-1].date()
+    fetched_month = last_date.month
+    fetched_day = last_date.day
+
     last_close_value = stock_close_data[-1]
     prev_close_value = stock_close_data[-2]
 
@@ -34,7 +40,7 @@ def __get_stock_price_and_rsi(stock_name: str) -> str:
     fetched_rsi_value = round(rsi.iat[-1], 2)
     rsi_str = f'[RSI {fetched_rsi_value}]'
 
-    return f'{stock_name_str}{icon_prefix}{last_close_value_str}{rise_rate_str} {rsi_str}'
+    return f'{stock_name_str}{icon_prefix}{last_close_value_str}{rise_rate_str} {rsi_str} {fetched_month}-{fetched_day}'
 
 
 def __get_fear_and_greed_value() -> str:
@@ -61,20 +67,22 @@ def __get_fear_and_greed_value() -> str:
 
 
 def get_full_finance_info_message():
-    print('[MESSAGE] Fetching finance info..')
+    print(f'[MESSAGE] Fetching finance info.. {dt.now()}')
     response_str = f'{dt.now()}\n\n'
 
     response_str += '---Stock Info---\n'
     for ticker in ['QQQ', 'IVV']:
         response_str += (__get_stock_price_and_rsi(ticker)+'\n')
+    response_str += 'RSI: 30 ~ 70\n'
 
     response_str += '\n---Fear And Greed---\n'
     response_str += __get_fear_and_greed_value()
 
     response_str += '\n---Exchange Rate---\n'
-    response_str += 'TODO\n'
+    response_str += api_exchange_rate.get_usd_exchange_rate()
 
     response_str += '\n---Deposit Rate---\n'
-    response_str += 'TODO\n'
+    response_str += api_deposit_rate.get_highest_deposit_rate()
 
+    print(f'[MESSAGE] Fetching finance info DONE {dt.now()}')
     return response_str
