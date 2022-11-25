@@ -13,6 +13,7 @@ c = DesiredCapabilities.CHROME
 # To bypass page loading
 c["pageLoadStrategy"] = "eager"
 
+# Remove `chromedriver` string if this is ubuntu env.
 driver = webdriver.Chrome(
     'chromedriver', options=options, desired_capabilities=c)
 
