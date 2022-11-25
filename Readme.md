@@ -3,7 +3,7 @@
   <img src="./res/logo.png" width=100/>
 </p>
 <p align="center">
-  <img src="./res/screenshot.jpg" />
+  <img src="./res/screenshot.jpg" width=250/>
 </p>
  
 ## Features
