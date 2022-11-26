@@ -25,7 +25,7 @@ updater = Updater(token=TELEGRAM_BOT_TOKEN)
 
 
 def send_telegram_message(userId: int, message: str):
-    bot.sendMessage(chat_id=userId, text=message)
+    bot.sendMessage(chat_id=userId, text=message, parse_mode='MarkdownV2')
 
 
 dp = updater.dispatcher
@@ -83,13 +83,13 @@ dp.add_handler(CommandHandler(
 def command_handler_fetch_now(update, context):
     user_id = update.effective_chat.id
     context.bot.send_message(
-        chat_id=user_id, text=get_full_finance_info_message())
+        chat_id=user_id, text='Fetching finance info..')
+    full_message = get_full_finance_info_message()
+    context.bot.send_message(
+        chat_id=user_id, text=full_message, parse_mode='HTML')
 
 
 dp.add_handler(CommandHandler('fetchnow', command_handler_fetch_now))
-
-# ! Registering Normal Message Handlers
-# dp.add_handler(MessageHandler(callback=test_handler))
 
 
 def start_polling():

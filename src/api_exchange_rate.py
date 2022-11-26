@@ -12,4 +12,5 @@ def get_usd_exchange_rate():
         '#exchangeList > li.on > a.head.usd > div > span.change')[0].get_text()
     changed_prefix = soup.select(
         '#exchangeList > li.on > a.head.usd > div > span.blind')[0].get_text()
-    return f'{exchange_value}원 [{changed_value.strip()} {changed_prefix}]\n'
+    icon = '🧨' if changed_prefix == '상승' else '🥶'
+    return f'{exchange_value}원 [{changed_value.strip()} {changed_prefix}{icon}]\n'

@@ -3,6 +3,7 @@ TA_Lib-0.4.24-cp310-cp310-win_amd64.whl
 src/test.db
 src/test.db-journal
 src/secrets.json
+src/__pycache__
 sqlite.db-journal
 sqlite.db
 test/chromedriver.exe

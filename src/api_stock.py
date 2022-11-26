@@ -4,9 +4,11 @@ import json
 from datetime import datetime as dt, timedelta
 import talib
 import yfinance as yf
+# from telegram.utils.helpers import escape_markdown
 # Import from local
 import api_exchange_rate
 import api_deposit_rate
+from utils import generate_text_bar_graph
 
 
 def __get_stock_price_and_rsi(stock_name: str) -> str:
@@ -24,13 +26,13 @@ def __get_stock_price_and_rsi(stock_name: str) -> str:
     prev_close_value = stock_close_data[-2]
 
     # Formatting Stock Name
-    stock_name_str = "{0: <5}".format(stock_name)
+    stock_name_str = "{0: <5}".format(f'<pre>{stock_name}</pre>')
 
     # Icon
     icon_prefix = '🧨'if last_close_value > prev_close_value else '🥶'
 
     # Last Close Value
-    last_close_value_str = "{0: <7}".format(round(last_close_value, 3))
+    last_close_value_str = "{0: <5}".format(round(last_close_value, 3))
 
     # Rise Rate
     rise_or_down_prefix = '+'if last_close_value > prev_close_value else ''
@@ -40,7 +42,8 @@ def __get_stock_price_and_rsi(stock_name: str) -> str:
     fetched_rsi_value = round(rsi.iat[-1], 2)
     rsi_str = f'[RSI {fetched_rsi_value}]'
 
-    return f'{stock_name_str}{icon_prefix}{last_close_value_str}{rise_rate_str} {rsi_str} {fetched_month}-{fetched_day}'
+    return f'{stock_name_str} {icon_prefix}{last_close_value_str}{rise_rate_str} {rsi_str} {fetched_month}-{fetched_day}\n   RSI: ' +\
+        generate_text_bar_graph(9, 30, fetched_rsi_value, 70)
 
 
 def __get_fear_and_greed_value() -> str:
@@ -55,34 +58,36 @@ def __get_fear_and_greed_value() -> str:
         def gap_between_prev(today: float, prev: float) -> str:
             prefix = '+' if today > prev else ''
             icon = '🧨' if today > prev else '🥶'
-            return f'({prefix}{round(today-prev,2)}){icon}'
+            return f'<pre>({prefix}{round(today-prev,2)}){icon}</pre>'
 
-        return f'<{round(data["score"],2)}> {data["rating"].capitalize()} [{data_time.date()}]\n' +\
-            f'Before 1D: {round(data["previous_close"],2)}{gap_between_prev(data["score"],data["previous_close"])}\n' +\
-            f'Before 1W: {round(data["previous_1_week"],2)}{gap_between_prev(data["score"],data["previous_1_week"])}\n' +\
-            f'Before 1M: {round(data["previous_1_month"],2)}{gap_between_prev(data["score"],data["previous_1_month"])}\n'
+        return (f'<b>[{round(data["score"],2)}]</b> | {data["rating"].capitalize()} <i>{data_time.date()}</i>\n') +\
+            generate_text_bar_graph(15, 0, round(data["score"], 2), 100)+'\n' +\
+            'Before <pre>1D</pre>: '+(f'{round(data["previous_close"],2)}{gap_between_prev(data["score"],data["previous_close"])}\n') +\
+            'Before <pre>1W</pre>: '+(f'{round(data["previous_1_week"],2)}{gap_between_prev(data["score"],data["previous_1_week"])}\n') +\
+            'Before <pre>1M</pre>: ' + \
+            (f'{round(data["previous_1_month"],2)}{gap_between_prev(data["score"],data["previous_1_month"])}\n')
 
     else:
-        return f'FearAndGreed value failed to fetch. Status Code: {response.status_code}\n'
+        return (f'FearAndGreed value failed to fetch. Status Code: {response.status_code}\n')
 
 
 def get_full_finance_info_message():
     print(f'[MESSAGE] Fetching finance info.. {dt.now()}')
-    response_str = f'{dt.now()}\n\n'
+    response_str = (f'{dt.now()}\n\n')
 
-    response_str += '---Stock Info---\n'
+    response_str += '<b>Stock Info</b>\n'
     for ticker in ['QQQ', 'IVV']:
         response_str += (__get_stock_price_and_rsi(ticker)+'\n')
-    response_str += 'RSI: 30 ~ 70\n'
 
-    response_str += '\n---Fear And Greed---\n'
-    response_str += __get_fear_and_greed_value()
+    response_str += '\n<b>Fear And Greed</b>\n'
+    response_str += (__get_fear_and_greed_value())
 
-    response_str += '\n---Exchange Rate---\n'
-    response_str += api_exchange_rate.get_usd_exchange_rate()
+    response_str += '\n<b>Exchange Rate</b>\n'
+    response_str += (api_exchange_rate.get_usd_exchange_rate())
 
-    response_str += '\n---Deposit Rate---\n'
-    response_str += api_deposit_rate.get_highest_deposit_rate()
+    response_str += '\n<b>Highest Deposit Rate</b>\n'
+    response_str += (
+        api_deposit_rate.get_highest_deposit_rate())
 
     print(f'[MESSAGE] Fetching finance info DONE {dt.now()}')
     return response_str
