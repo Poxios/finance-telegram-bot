@@ -21,6 +21,7 @@ def main():
     """ Send finance message to registered users """
     for user_id, user_name in user_get_list():
         msg_to_send = get_full_finance_info_message(user_id)
+        print(f'Sending finance info to {user_name}...')
         send_telegram_message(user_id, msg_to_send)
 
     print(f'[SCHEDULE] Success Running {dt.now()}')

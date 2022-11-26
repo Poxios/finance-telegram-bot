@@ -28,6 +28,11 @@ cur = con.cursor()
 if init_required:
     init_sqlite(cur)
 
+print(f'[SYSTEM] DB conencted, init_required: {init_required}')
+cur.execute('SELECT * FROM User')
+user_list = cur.fetchall()
+print(f'[SYSTEM] Detected user list: {user_list}')
+
 # ! User
 
 
@@ -37,8 +42,8 @@ def user_add_new_user(user_id: int, name: str):
         cur.execute(
             f'INSERT INTO User VALUES({user_id}, "{name}")')
         print('Adding new user complete')
-    except:
-        print('Adding new user FAILED')
+    except Exception as e:
+        print(f'Adding new user FAILED: {e}')
 
 
 def user_get_list():
