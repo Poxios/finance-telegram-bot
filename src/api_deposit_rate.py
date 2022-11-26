@@ -1,3 +1,4 @@
+import json
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -14,11 +15,23 @@ c = DesiredCapabilities.CHROME
 c["pageLoadStrategy"] = "eager"
 
 
+def get_running_env_from_secret():
+    with open('./src/secrets.json', 'r') as file:
+        data = json.load(file)
+        return data['RUNNING_OS']
+
+
 def get_highest_deposit_rate():
     try:
         # Remove `chromedriver` string if this is ubuntu env.
-        driver = webdriver.Chrome(
-            'chromedriver', options=options, desired_capabilities=c)
+        driver = None
+        RUNNING_ENV = get_running_env_from_secret()
+        if RUNNING_ENV == 'Windows':
+            driver = webdriver.Chrome(
+                'chromedriver', options=options, desired_capabilities=c)
+        else:
+            driver = webdriver.Chrome(options=options, desired_capabilities=c)
+
         driver.get('https://finlife.fss.or.kr/deposit/selectDeposit.do')
         sleep(1)
         # click '복리'
