@@ -130,7 +130,7 @@ def command_handler_help(update, context):
     response_str = ''
     response_str += '<code>/addstock QQQ    </code> Add QQQ to your favorite stock list.\n'
     response_str += '<code>/removestock QQQ </code> Remove QQQ from your favorite stock list.\n'
-    response_str += '<code>/showstocks      </code> Show your favorite stocks list.'
+    response_str += '<code>/showstocks      </code> Show your favorite stocks list.\n'
     response_str += '<code>/fetchnow        </code> Fetch finance info now.'
     user_id = update.effective_chat.id
     context.bot.send_message(
