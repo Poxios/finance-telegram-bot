@@ -19,10 +19,8 @@ def schedule_checker(schedule):
 
 def main():
     """ Send finance message to registered users """
-    finance_message = get_full_finance_info_message()
-    user_list_to_send = user_get_list()
-    for user_id, user_name in user_list_to_send:
-        msg_to_send = finance_message
+    for user_id, user_name in user_get_list():
+        msg_to_send = get_full_finance_info_message(user_id)
         send_telegram_message(user_id, msg_to_send)
 
     print(f'[SCHEDULE] Success Running {dt.now()}')

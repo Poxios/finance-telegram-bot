@@ -35,7 +35,7 @@ def user_add_new_user(user_id: int, name: str):
     try:
         print('Adding new user...')
         cur.execute(
-            f'INSERT INTO User VALUES({user_id,name})')
+            f'INSERT INTO User VALUES({user_id}, "{name}")')
         print('Adding new user complete')
     except:
         print('Adding new user FAILED')
@@ -53,7 +53,7 @@ def favorite_stock_get_list(user_id: int):
     try:
         print(f'Get favorite stock list: {user_id}...')
         cur.execute(
-            f'SELECT stock_name FROM Favorite_Stock WHERE user_id = {user_id}')
+            f'SELECT stock_name FROM Favorite_Stock WHERE user_id={user_id}')
         favorite_stock_list = cur.fetchall()
         print(f'Get favorite stock list: {user_id} success')
         return favorite_stock_list
@@ -63,9 +63,7 @@ def favorite_stock_get_list(user_id: int):
 
 def favorite_stock_add_to_user(user_id: int, stock_ticker: str):
     try:
-        print('Adding favorite stock...')
-        print(f'Ticker: {stock_ticker}')
-        print(f'User: {user_id}')
+        print(f'Adding favorite stock... / {stock_ticker} / {user_id}')
         cur.execute(
             f'INSERT INTO Favorite_Stock VALUES ("{stock_ticker}", {user_id})')
         return True
@@ -76,9 +74,9 @@ def favorite_stock_add_to_user(user_id: int, stock_ticker: str):
 
 def favorite_stock_remove_from_user(user_id: int, stock_ticker: str):
     try:
-        print('Remove favorite stock...')
+        print(f'Remove favorite stock... / {stock_ticker} / {user_id}')
         cur.execute(
-            f'DELETE FROM Favorite_Stock WHERE user_id={user_id}, stock_name={stock_ticker}')
+            f'DELETE FROM Favorite_Stock WHERE user_id={user_id} AND stock_name="{stock_ticker}"')
         print('Remove favorite stock complete')
-    except:
-        print('Remove favorite stock FAILED')
+    except Exception as e:
+        print(f'Remove favorite stock FAILED : {e}')
