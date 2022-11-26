@@ -8,3 +8,4 @@ src/__pycache__/
 sqlite.db-journal
 sqlite.db
 test/chromedriver.exe
+ta-lib
