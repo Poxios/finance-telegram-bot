@@ -1,8 +1,11 @@
+import json
 from threading import Thread
 from scheduler import Scheduler
 import pytz
 from time import sleep
 from datetime import datetime as dt, timedelta, timezone, time
+import requests
+
 
 # Import from local
 from api_stock import get_full_finance_info_message
@@ -27,11 +30,20 @@ def main():
     print(f'[SCHEDULE] Success Running {dt.now()}')
 
 
+def health_check():
+    """ send http healthy message to config url """
+    with open('./src/secrets.json', 'r') as file:
+        data = json.load(file)["HEALTH_CHECK_URL"]
+        if data:
+            requests.get(data)
+
+
 if __name__ == "__main__":
     TZ_SEOUL = pytz.timezone('Asia/Seoul')
     schedule = Scheduler(tzinfo=TZ_SEOUL)
     trigger = time(hour=7, tzinfo=TZ_SEOUL)
     schedule.daily(trigger, main)
+    schedule.minutely(time(tzinfo=TZ_SEOUL), health_check)
     print(schedule)
 
     # Start Scheduler
