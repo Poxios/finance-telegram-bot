@@ -22,7 +22,8 @@ init_required = False
 if not os.path.isfile('sqlite.db'):
     init_required = True
 
-con = sqlite3.connect('./sqlite.db', check_same_thread=False)
+con = sqlite3.connect(
+    './sqlite.db', check_same_thread=False, isolation_level=None)
 cur = con.cursor()
 
 if init_required:
