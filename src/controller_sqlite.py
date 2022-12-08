@@ -71,7 +71,7 @@ def favorite_stock_add_to_user(user_id: int, stock_ticker: str):
     try:
         print(f'Adding favorite stock... / {stock_ticker} / {user_id}')
         cur.execute(
-            f'INSERT INTO Favorite_Stock(stock_name, user_id) VALUES', (stock_ticker, user_id))
+            'INSERT INTO Favorite_Stock(stock_name, user_id) VALUES(?,?)', (stock_ticker, user_id))
         return True
     except Exception as e:
         print(e)
