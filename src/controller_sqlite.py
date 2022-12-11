@@ -6,18 +6,22 @@ def init_sqlite(cur):
     print('[SYSTEM] Initializing DB Start...')
 
     # [CREATE TABLE] User
-    cur.execute("CREATE TABLE User( \
-                    id      INT     PRIMARY KEY, \
-                    name    TEXT    NOT NULL \
-                )")
+    cur.execute("""
+                CREATE TABLE User(
+                    id      INT     PRIMARY KEY,
+                    name    TEXT    NOT NULL
+                )
+                """)
 
     # [CREATE TABLE] Favorite Stock
-    cur.execute("CREATE TABLE Favorite_Stock( \
-                    stock_name  TEXT     NOT NULL, \
-                    user_id     INT      NOT NULL, \
-                    UNIQUE(stock_name, user_id),    \
-                    FOREIGN KEY(user_id) REFERENCES User(id) \
-                )")
+    cur.execute("""
+                CREATE TABLE Favorite_Stock(
+                    stock_name  TEXT     NOT NULL,
+                    user_id     INT      NOT NULL,
+                    UNIQUE(stock_name, user_id),
+                    FOREIGN KEY(user_id) REFERENCES User(id)
+                )
+                """)
 
     print('[SYSTEM] Initializing DB Complete')
 

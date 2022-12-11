@@ -26,16 +26,16 @@ def __get_stock_price_and_rsi(stock_name: str) -> tuple:
         prev_close_value = stock_close_data[-2]
 
         # Formatting Stock Name
-        stock_name_str = "{0: <5}".format(f'<pre>{stock_name}</pre>')
+        stock_name_str = f'<pre>{stock_name}</pre>'
 
         # Icon
-        icon_prefix = '🧨'if last_close_value > prev_close_value else '🥶'
+        icon_prefix = '🧨' if last_close_value > prev_close_value else '🥶'
 
         # Last Close Value
-        last_close_value_str = "{0: <5}".format(round(last_close_value, 3))
+        last_close_value_str = round(last_close_value, 3)
 
         # Rise Rate
-        rise_or_down_prefix = '+'if last_close_value > prev_close_value else ''
+        rise_or_down_prefix = '+' if last_close_value > prev_close_value else ''
         rise_rate_str = f'({rise_or_down_prefix}{round((last_close_value - prev_close_value)/prev_close_value*100,2)}%)'
 
         # RSI Rate
