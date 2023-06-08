@@ -50,7 +50,7 @@ def get_highest_deposit_rate():
         print(e)
         return f'[DEPOSIT_ERROR]'
 
-def test():
-    print(get_highest_deposit_rate())
+# def test():
+#     print(get_highest_deposit_rate())
 
-test()
+# test()
