@@ -9,3 +9,5 @@ sqlite.db-journal
 sqlite.db
 test/chromedriver.exe
 ta-lib
+venv
+chromedriver.exe
