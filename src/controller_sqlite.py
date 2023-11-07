@@ -8,7 +8,7 @@ def init_sqlite(cur):
     # [CREATE TABLE] User
     cur.execute("""
                 CREATE TABLE User(
-                    id      INT     PRIMARY KEY,
+                    id      INTEGER     PRIMARY KEY autoincrement,
                     name    TEXT    NOT NULL
                 )
                 """)
