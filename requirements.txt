@@ -51,3 +51,4 @@ tzlocal==4.2
 urllib3==1.26.12
 wcwidth==0.2.5
 yfinance==0.1.85
+scheduler==0.8.1
