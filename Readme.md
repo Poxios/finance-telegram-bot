@@ -25,4 +25,12 @@
 * Pooling messages from telegram while running this app and execute commands.
 * Save user info in `SQLite`.
 
+## How to install
+1. Go to [Link](https://github.com/TA-Lib/ta-lib-python#windows) to install `TA-Lib` binary.
+2. After install library, run
+```bash
+pip3 install -r requirements.txt
+pip3 install TA-Lib
+```
+  
 > @Poxios, 2022
