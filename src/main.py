@@ -21,28 +21,28 @@ def schedule_checker(schedule):
 
 
 def main():
-    """ Send finance message to registered users """
+    """Send finance message to registered users"""
     for user_id, user_name in user_get_list():
         msg_to_send = get_full_finance_info_message(user_id)
-        print(f'Sending finance info to {user_name}...')
+        print(f"Sending finance info to {user_name}...")
         send_telegram_message(user_id, msg_to_send)
 
-    print(f'[SCHEDULE] Success Running {dt.now()}')
+    print(f"[SCHEDULE] Success Running {dt.now()}")
 
 
 def health_check():
-    """ send http healthy message to config url """
-    with open('./src/secrets.json', 'r') as file:
+    """send http healthy message to config url"""
+    with open("./src/secrets.json", "r") as file:
         data = json.load(file)["HEALTH_CHECK_URL"]
         if data:
             requests.get(data)
 
 
 if __name__ == "__main__":
-    TZ_SEOUL = pytz.timezone('Asia/Seoul')
+    TZ_SEOUL = pytz.timezone("Asia/Seoul")
     schedule = Scheduler(tzinfo=TZ_SEOUL)
-    trigger = time(hour=7, tzinfo=TZ_SEOUL)
-    schedule.daily(trigger, main)
+    # trigger = time(hour=7, tzinfo=TZ_SEOUL)
+    schedule.daily(time(7, 0), main)
     schedule.minutely(time(tzinfo=TZ_SEOUL), health_check)
     print(schedule)
 
