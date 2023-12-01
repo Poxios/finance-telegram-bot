@@ -1,6 +1,6 @@
 import json
 from threading import Thread
-from scheduler import Scheduler
+import schedule
 import pytz
 from time import sleep
 from datetime import datetime as dt, timedelta, timezone, time
@@ -40,13 +40,16 @@ def health_check():
 
 if __name__ == "__main__":
     TZ_SEOUL = pytz.timezone("Asia/Seoul")
-    schedule = Scheduler(tzinfo=TZ_SEOUL)
-    schedule.daily(timing=time(hour=7), handle=main)
-    schedule.minutely(timing=time(tzinfo=TZ_SEOUL), handle=health_check)
-    print(schedule)
+    schedule.every().day.at("07:00").do(main).at_time_zone(TZ_SEOUL)
+    schedule.every(1).minutes.do(health_check)
+    Thread(target=start_polling).start()
 
-    # Start Scheduler
-    Thread(target=lambda: schedule_checker(schedule)).start()
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
-    # Start polling messages from telegram
-    start_polling()
+    # # Start Scheduler
+    # Thread(target=lambda: schedule_checker(schedule)).start()
+
+    # # Start polling messages from telegram
+    # start_polling()
