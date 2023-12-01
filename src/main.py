@@ -43,6 +43,8 @@ if __name__ == "__main__":
     schedule.every(1).minutes.do(health_check)
     Thread(target=start_polling).start()
 
+    start_polling()
+
     while True:
         schedule.run_pending()
         sleep(1)
@@ -51,4 +53,4 @@ if __name__ == "__main__":
     # Thread(target=lambda: schedule_checker(schedule)).start()
 
     # # Start polling messages from telegram
-    # start_polling()
+    

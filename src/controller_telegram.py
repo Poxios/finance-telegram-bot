@@ -166,5 +166,5 @@ def command_handler_fetch_now(update, context):
 app.add_handler(CommandHandler("fetchnow", command_handler_fetch_now))
 
 
-def start_polling():
+async def start_polling():
     app.run_polling()
