@@ -39,8 +39,7 @@ def health_check():
 
 
 if __name__ == "__main__":
-    TZ_SEOUL = pytz.timezone("Asia/Seoul")
-    schedule.every().day.at("07:00").do(main).at_time_zone(TZ_SEOUL)
+    schedule.every().day.at("07:00").do(main)
     schedule.every(1).minutes.do(health_check)
     Thread(target=start_polling).start()
 
