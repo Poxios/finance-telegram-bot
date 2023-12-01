@@ -41,8 +41,7 @@ def health_check():
 if __name__ == "__main__":
     TZ_SEOUL = pytz.timezone("Asia/Seoul")
     schedule = Scheduler(tzinfo=TZ_SEOUL)
-    # trigger = time(hour=7, tzinfo=TZ_SEOUL)
-    schedule.daily(time(7, 0), main)
+    schedule.daily(time(tzinfo=TZ_SEOUL, hour=7), main)
     schedule.minutely(time(tzinfo=TZ_SEOUL), health_check)
     print(schedule)
 
