@@ -166,6 +166,6 @@ def command_handler_fetch_now(update, context):
 app.add_handler(CommandHandler("fetchnow", command_handler_fetch_now))
 
 
-async def start_polling():
+def start_polling():
     print('[SYSTEM] Start telegram polling...')
     app.run_polling()
