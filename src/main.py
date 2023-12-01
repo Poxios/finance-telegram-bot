@@ -14,10 +14,10 @@ from controller_telegram import send_telegram_message, start_polling
 
 
 # ! Scheduler
-def schedule_checker(schedule):
-    while True:
-        schedule.exec_jobs()
-        sleep(5)
+# def schedule_checker(schedule):
+#     while True:
+#         schedule.exec_jobs()
+#         sleep(5)
 
 
 def main():
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        sleep(1)
 
     # # Start Scheduler
     # Thread(target=lambda: schedule_checker(schedule)).start()
