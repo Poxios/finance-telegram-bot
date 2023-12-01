@@ -167,4 +167,5 @@ app.add_handler(CommandHandler("fetchnow", command_handler_fetch_now))
 
 
 async def start_polling():
+    print('[SYSTEM] Start telegram polling...')
     app.run_polling()
