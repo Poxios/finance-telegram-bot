@@ -44,7 +44,7 @@ if __name__ == "__main__":
     Thread(target=start_polling).start()
 
     start_polling()
-
+    print('[SYSTEM] Start scheduler')
     while True:
         schedule.run_pending()
         sleep(1)
