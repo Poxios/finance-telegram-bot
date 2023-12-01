@@ -47,7 +47,7 @@ def command_handler_add_stock_ticker_to_user(update, context):
 
 app.add_handler(
     CommandHandler(
-        "addstock", pass_args=True, callback=command_handler_add_stock_ticker_to_user
+        "addstock", has_args=True, callback=command_handler_add_stock_ticker_to_user
     )
 )
 
@@ -64,7 +64,7 @@ def command_handler_remove_stock_ticker_to_user(update, context):
 app.add_handler(
     CommandHandler(
         "removestock",
-        pass_args=True,
+        has_args=True,
         callback=command_handler_remove_stock_ticker_to_user,
     )
 )
@@ -116,7 +116,7 @@ def command_handler_new_user_add(update, context):
 
 
 app.add_handler(
-    CommandHandler("adduser", pass_args=True, callback=command_handler_new_user_add)
+    CommandHandler("adduser", has_args=True, callback=command_handler_new_user_add)
 )
 
 # $ Get User List (ADMIN ONLY)
